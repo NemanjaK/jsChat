@@ -1,17 +1,9 @@
 var chatApplication = new function () {
 
 	var self = this;
+	self.socket = io.connect('/');
 
-	self.messageQueue = ko.observableArray([
-		{
-			username: 'Username 1',
-			message: "Lorem ipsum"
-		},
-		{
-			username: 'Username 2',
-			message: "Lorem ipsum"
-		}
-	]);
+	self.messageQueue = ko.observableArray([]);
 
 	self.currentMessage = ko.observable();
 
@@ -21,8 +13,21 @@ var chatApplication = new function () {
 			message: self.currentMessage()
 		});
 
+		// Broadcast it
+		self.socket.emit('new-message', {
+			username: "me",
+			message: self.currentMessage()
+		});
+
 		self.currentMessage(null);
 	}
+
+	self.socket.on('message', function(response){
+		var msgList = response;
+		$(msgList).each(function(key, val) {
+			self.messageQueue.push(val);
+		});
+	});
 
 }
 
