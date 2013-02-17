@@ -1,6 +1,8 @@
 var chatApplication = new function () {
 
 	var self = this;
+	var user = $.cookie('username');
+	
 	self.socket = io.connect('/');
 
 	self.messageQueue = ko.observableArray([]);
@@ -9,13 +11,13 @@ var chatApplication = new function () {
 
 	self.addMessage = function() {
 		self.messageQueue.push({
-			username: "me",
+			username: user,
 			message: self.currentMessage()
 		});
 
 		// Broadcast it
 		self.socket.emit('new-message', {
-			username: "me",
+			username: user,
 			message: self.currentMessage()
 		});
 

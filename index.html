@@ -26,11 +26,13 @@
 
     <script type="text/javascript" src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script>window.jQuery || document.write('<script type="text/javascript" src="js/vendor/jquery-1.9.1.js"><\/script>')</script>
-
+    <script>window.jQuery || document.write('<script type="text/javascript" src="js/vendor/jquery-1.9.1.js"><\/script>')</script>	
     <script type="text/javascript" src="js/vendor/bootstrap.min.js"></script>
     <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
-    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	
+	<script type="text/javascript" src="js/vendor/jquery.cookie.js"></script>
+	<script type="text/javascript" src="js/user.js"></script>
 
 </head>
 <body>
@@ -51,7 +53,9 @@
                 <span class="icon-bar"></span>
             </a>
             <a class="brand" href="#">jChat</a>
-
+			<ul class="nav">
+				<li><a href="#userModal" data-toggle="modal">Change username</a></li>
+			</ul>
         </div>
     </div>
 </div>
@@ -66,6 +70,25 @@
             border-radius: 4px 4px 4px 4px;
         }
     </style>
+	<!-- /Start Popout if username is not set --> 
+	<div id="userModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+			<h3 id="userModalLabel">Chose username</h3>
+		</div>
+		<div class="modal-body">
+			<div class="control-group">
+				<label class="control-label" for="username">Username</label>
+				<div class="controls">
+					<input type="text" class="input-large" id="username" />
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-primary" type="submit" id="usersubmit">Save changes</button>
+		</div>
+	</div>
+	<!-- /END Popout if username is not set-->
     <div id="chat-holder" class="row-fluid">
         <div class="span12" data-bind="foreach: messageQueue">
             <div class="row-fluid">
